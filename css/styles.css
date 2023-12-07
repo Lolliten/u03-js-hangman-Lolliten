@@ -1,222 +1,131 @@
-@charset "UTF-8";
-
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
-  color: #666;
-  font-family: sans-serif;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  height: 100%;
-  min-height: 100vh;
-}
-
-header {
-  background-color: silver;
-  color: #fff;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 4.5em;
-  text-align: center;
-}
-
-main {
-  flex: 1;
-  padding: 1.5em;
-}
-
-main:after {
-  content: "\00a0"; /* &nbsp; */
-  display: block;
-  margin-top: var(--space);
-  height: 0px;
-  visibility: hidden;
-}
-
-main > article {
-  display: flex;
-  flex-direction: column;
-  padding: 1.5em;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
   align-items: center;
-}
-
-main > article > button {
-  align-content: center;
   justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(rgb(168, 168, 168), rgb(68, 68, 68));
 }
 
-main > article > h2 {
-  text-align: center;
-  color: #777;
-  margin-bottom: 1.5em;
+.container {
+  /* what wrong?*/
+  width: 850px;
+  background: whitesmoke;
+  display: flex;
+  gap: 70px;
+  align-items: flex-end;
+  padding: 60px 40px;
+  border-radius: 10px;
 }
 
-ul {
-  list-style-type: none;
+.hangman-box img {
+  max-width: 270px;
 }
 
-footer {
-  background-color: silver;
-  border-top: 1px solid #666;
+.hangman-box h1 {
+  font-size: 1.45rem;
   margin-top: 20px;
-  padding-top: 30px;
-  color: #fff;
-  font-size: 1.25em;
-  width: 100%;
-  flex: none;
   text-align: center;
-}
-
-#startGameBtn {
-  font-size: 1.5em;
-}
-
-#gameBoard {
-  padding: 10px 0;
-}
-
-#letterButtons {
-  display: inline-flex;
-  list-style-type: none;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#letterButtons button:not(last-child) {
-  margin: 4px 4px;
-  cursor: pointer;
-  max-width: 84px;
-  min-width: 84px;
-}
-
-#letterBoxes li {
-  display: inline-flex;
-}
-
-#letterBoxes input {
-  border: 1px solid #666;
-  color: #666;
-  font-size: 1.5em;
-  font-weight: bold;
-  line-height: 2em;
-  margin-top: 1em;
-  padding: 20px 5px;
-  text-align: center;
-  width: 2em;
-}
-
-#message {
-  padding-top: 20px;
-  font-size: 1.5em;
-}
-
-.btn {
-  -moz-user-select: text;
-  background-color: #fff;
-  background: transparent;
-  border-radius: 6px;
-  border: 0;
-  border: 2px solid #666;
-  color: #666;
-  cursor: pointer;
-  display: block;
-  font: inherit;
-  line-height: normal;
-  margin-bottom: 16px;
-  margin: 0;
-  overflow: visible;
-  padding: 0;
-  padding: 16px 36px 22px;
-  text-decoration: none;
   text-transform: uppercase;
 }
 
-.btn::-moz-focus-inner {
-  padding: 0;
-  border: 0;
+.word-display {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn--stripe {
-  overflow: hidden;
-  position: relative;
+.word-display .letter {
+  width: 28px;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  border-bottom: 3px solid #000;
 }
 
-.btn--stripe:after {
-  content: "";
-  display: block;
-  height: 7px;
-  width: 100%;
-  background-image: -webkit-repeating-linear-gradient(
-    45deg,
-    #666,
-    #666 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  background-image: repeating-linear-gradient(
-    45deg,
-    #666,
-    #666 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border-top: 1px solid #666;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background-size: 7px 7px;
+.word-display .letter.guessed {
+  border-color: transparent;
+  margin: -40px 0 35px;
 }
 
-.btn--stripe:disabled {
-  background-color: #999;
-  color: #fff;
-  border-color: #666;
+.game-box h4 {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 
-.btn--stripe:hover {
-  background-color: #666;
-  color: #fff;
-  border-color: #000;
+.game-box h4 b {
+  font-weight: 600;
 }
 
-.btn--stripe:disabled:after,
-.btn--stripe:hover:after {
-  background-image: -webkit-repeating-linear-gradient(
-    45deg,
-    #fff,
-    #fff 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  background-image: repeating-linear-gradient(
-    45deg,
-    #fff,
-    #fff 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  border-top: 1px solid #000;
+.game-box .guesses-text b {
+  color: #ff0000;
+}
+
+.game-box .keyboard {
+  display: flex;
+  gap: 5px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.keyboard button {
+  /*HELP center letters in button and buttons alike size*/
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  padding: 7px;
+  border: none;
+  background: rgb(126, 126, 126);
+  border-radius: 4px;
+  text-transform: uppercase;
+  width: calc(100% / 9 - 5px);
+}
+
+.keyboard button[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.keyboard button:hover {
+  background: rgb(54, 54, 54);
+}
+
+#startBtn{
+  color: whitesmoke;
+  font-size: 1 rem;
+  font-weight: 600;
+  background: rgb(126, 126, 126);
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+@media (max-width: 780px) {
+  .container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .hangman-box img {
+      max-width: 270px;
+  }
+
+  .hangman-box h1 {
+      display: none;
+  }
 }
