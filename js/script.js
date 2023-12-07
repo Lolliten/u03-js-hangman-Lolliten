@@ -6,6 +6,8 @@ const letterButtons = document.querySelectorAll(".letterButtons");
 const messageBox = document.querySelector("#message");
 const startBtn = document.querySelector("#startBtn");
 
+
+
 //counts wrong guesses, max 6 and shows player
 let currentWord, correctLetters = [], wrongGuessCount = 0;
 const maxGuesses = 6;
@@ -21,18 +23,28 @@ const getRandomWord = () => {
 
 //gameover, can I move this? where is isVictory declared?
 const gameOver = (isVictory) => {
-    if (isVictory) {
-        alert("You won!");
-    } else {
-        alert("You lost!");
-    }
+    letterButtons.forEach((button) => {
 
+        button.disabled = false;
+        button.removeEventListener("click", keyboardClick); //removes eventlistner when game is over
+    })
     setTimeout(() => {
-    }, 300); //3 sek timeout
+        if (isVictory) {
+            alert("You won! \n\nTo play again press Start Game!");
+            restart();
+        } else {
+            alert("You lost! \n\nTo play again press Start Game!");
+            restart();
+        }
+    }, 1000); //1 sek timeout before win or lose message
+
 }
 
 //checks if clicked letters are correct and pushes them to letter-space
-const keyboardClick = (button, clickedLetter) => {
+const keyboardClick = (e) => { //clickedLetter e.currentTarget.value, button e.currentTarget
+    const button = e.currentTarget;
+    const clickedLetter = e.currentTarget.value;
+
     let lowerCaseLetter = clickedLetter.toLowerCase();
     //checks if clickedLetter is exist on the currentWord
     if (currentWord.includes(lowerCaseLetter)) {
@@ -58,15 +70,20 @@ const keyboardClick = (button, clickedLetter) => {
     //if(gameOver or isVictory) true = button.enable;
 
     //checks if you guesses wrong more than 6 times then gameover
+    console.log(wrongGuessCount);
+    console.log(maxGuesses);
+    console.log(correctLetters);
+    console.log(currentWord);
     if (wrongGuessCount === maxGuesses) gameOver(false);
-    if (correctLetters.length === currentWord.lenght) gameOver(true);
+    if (correctLetters.length === currentWord.length) gameOver(true);
 
 }
 
 //decides what happens when letter in keyboard is clicked
 const initButtons = () => {
     letterButtons.forEach((letter) => {
-        letter.addEventListener("click", e => { keyboardClick(letter, e.target.value) });
+
+        letter.addEventListener("click", keyboardClick);
     })
 }
 
@@ -76,7 +93,24 @@ const startGame = () => {
     initButtons();
 }
 
+const restart = () => {
+    correctLetters = [];
+    wrongGuessCount = 0;
+    guessesText.innerText = `${wrongGuessCount} / ${maxGuesses}`;
+    hangmanImage.src = "images/h4.png";
+    wordDisplay.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+        wordDisplay.innerHTML += `<li class="letter"></li>`;
+
+    }
+    document.querySelector(".hint-text b").innerText = "";
+} //Also reset currentWord 
+//Take restart function and game over copy to old version
+
+
+
 startBtn.addEventListener("click", startGame); //Last thing O-H helped with, not ready!!
+
 
 
 //Reset buttons
