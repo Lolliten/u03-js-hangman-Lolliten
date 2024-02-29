@@ -86,11 +86,27 @@ const initButtons = () => {
         letter.addEventListener("click", keyboardClick);
     })
 }
+const showResetButton = () => {
+    startBtn.innerText = "Reset";
+    startBtn.removeEventListener("click", startGame);
+    startBtn.addEventListener("click", resetGame);
+}
+const resetGame = () => {
+    letterButtons.forEach((button) => {
+
+        button.disabled = false;
+        button.removeEventListener("click", keyboardClick); //this removes eventlistner when game is won or lost
+    })
+    restart();
+    
+}
+
 //Start game funtion, default picture and funtions called
 const startGame = () => {
     hangmanImage.src = "images/h0.png";
     getRandomWord();
     initButtons();
+    showResetButton(); 
 }
 //restart funtion, sets default picture, and resets game
 const restart = () => {
@@ -104,6 +120,9 @@ const restart = () => {
 
     }
     document.querySelector(".hint-text b").innerText = "";
+    startBtn.innerText = "Start Game";
+    startBtn.removeEventListener("click", resetGame);
+    startBtn.addEventListener("click", startGame);
 }
 
 //event listerner what happens when game starts and button is clicked
